@@ -6,11 +6,11 @@ import { Pie } from 'react-chartjs-2';
 
 
 function Reports() {
-    // filter date range
+    // filter date range (start data and end date optional)
     const [dateRange, setDateRange] = useState({ startDate: "", endDate: "" });
-    // filter by category
+    // filter by category (can select none, some, or all)
     const [selectedCategory, setSelectedCategory] = useState([]);
-    // filter by amount range
+    // filter by amount range for min and max price
     const [amountRange, setAmountRange] = useState({ min: "", max: "" });
 
     // const [transactions, setTransactions] = useState([]);
