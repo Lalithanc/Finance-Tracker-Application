@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
-import { CgCheckO } from "react-icons/cg"; // check mark symbol
-import { CgCloseO } from "react-icons/cg"; // cancel mark symbol
+import { CgCheckO, CgCloseO } from "react-icons/cg"; // check mark symbol and cancel mark symbol
 import axios from 'axios';  // Make sure to import axios
 import Header from "../components/Header";
 import Form from "../components/Form";
