@@ -2,7 +2,7 @@ import Header from "../components/Header";
 import { useState, useEffect, useRef } from "react";
 import axios from 'axios';
 import { ChevronDownIcon, CheckIcon } from "@heroicons/react/20/solid";
-import { Pie } from 'react-chartjs-2';
+// import { Pie } from 'react-chartjs-2';
 
 
 function Reports() {
