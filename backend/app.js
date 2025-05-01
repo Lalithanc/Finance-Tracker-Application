@@ -1,7 +1,10 @@
 const express = require('express');
+
+// connect to sequlize for ORM functionality
 const { Sequelize, DataTypes } = require('sequelize');
 const cors = require('cors');
 
+// use express and declare port number
 const app = express();
 const port = 5001;
 
