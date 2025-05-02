@@ -1,3 +1,4 @@
+// use express for API calls!
 const express = require('express');
 
 // connect to sequlize for ORM functionality
