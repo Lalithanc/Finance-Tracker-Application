@@ -3,6 +3,7 @@ import axios from 'axios';
 import HomePageMain from './HomePageMain';
 
 // Function to calculate balance dynamically from the list of transactions
+// uses calculations on revenues and expenses for user
 const calculateBalance = (transactions) => {
     return transactions.reduce((balance, transaction) => {
         // increase balance for revenue

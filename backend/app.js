@@ -137,7 +137,7 @@ const checkIfUserExists = async () => {
 // Insert a new sample user
 const insertUser = async () => {
     try {
-        const user = await User.create({
+        const user = await User.create({ // ORM to create a user
             username: 'jane_doe',
             password: 'password123',
             first_name: 'Jane',
@@ -218,6 +218,7 @@ const updateUserBalance = async (userId) => {
             WHERE user_id = :userId
             `,
             {
+                // utilizing Sequielize and passing parameters to avoid SQL injections
                 replacements: { userId },
                 type: sequelize.QueryTypes.SELECT,
             }
@@ -232,7 +233,7 @@ const updateUserBalance = async (userId) => {
         console.log("Expense Sum:", expenseSum);
         console.log("Total Balance:", totalBalance);
 
-        // Update using Sequelize ORM
+        // Update using Sequelize ORM to upddate total balance for user
         await User.update(
             { current_balance: totalBalance },
             { where: { user_id: userId } }
@@ -383,6 +384,7 @@ app.get('/api/reports/category-summary/:userId', async (req, res) => {
             ORDER BY total_amount DESC
             `,
             {
+                // prepared statements to prevent SQL injections
                 replacements: { userId },
                 type: sequelize.QueryTypes.SELECT,
             }
