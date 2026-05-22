@@ -21,7 +21,7 @@ const Header = () => {
     <header className="flex w-full items-center justify-between border-b border-gray-200 p-6">
       <div className="flex items-center gap-2">
         <span className="text-[2.5rem] font-bold text-[#2d9a51]">$</span>
-        <h1 className="text-[2rem] font-medium text-[#2d9a51]">Finance Friend</h1>
+        <h1 className="text-[2rem] font-medium text-[#2d9a51]">FinPal</h1>
       </div>
       <div className="relative flex items-center gap-4">
         {/* User icon triggers menu */}
