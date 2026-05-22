@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from 'axios';
 import dayjs from "dayjs";
 
@@ -6,11 +6,50 @@ const Form = ({ transactions, setTransactions, expenseMode, setExpenseMode }) =>
     const [description, setDescription] = useState('');
     const [amount, setAmount] = useState('');
     const [category, setCategory] = useState('');
+    const [availableCategories, setAvailableCategories] = useState([]);
+    const [filteredCategories, setFilteredCategories] = useState([]);
+    const [showDropdown, setShowDropdown] = useState(false);
+
+    // Fetch available categories on component mount
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await axios.get('http://localhost:5001/api/categories');
+                setAvailableCategories(response.data);
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        };
+        fetchCategories();
+    }, []);
 
     // Functions update state when user inputs in the form fields
     const updateDescription = (event) => setDescription(event.target.value);
     const updateAmount = (event) => setAmount(event.target.value);
-    const updateCategory = (event) => setCategory(event.target.value);
+    
+    const updateCategory = (event) => {
+        const value = event.target.value;
+        setCategory(value);
+        
+        // Filter categories based on input
+        if (value.trim()) {
+            const filtered = availableCategories.filter(cat =>
+                cat.toLowerCase().includes(value.toLowerCase())
+            );
+            setFilteredCategories(filtered);
+            setShowDropdown(filtered.length > 0);
+        } else {
+            setFilteredCategories([]);
+            setShowDropdown(false);
+        }
+    };
+
+    // Handle category selection from dropdown
+    const selectCategory = (selectedCategory) => {
+        setCategory(selectedCategory);
+        setFilteredCategories([]);
+        setShowDropdown(false);
+    };
 
     const user_id = 1;
 
@@ -99,14 +138,31 @@ const Form = ({ transactions, setTransactions, expenseMode, setExpenseMode }) =>
             />
 
             <p className="mt-4 font-semibold text-[1.2rem]">Category:</p>
-            <input
-                className="mt-2 w-full border-[0.3px] border-gray-200 p-2 py-3 bg-white"
-                type="text"
-                value={category}
-                onChange={updateCategory}
-                required
-                placeholder="Enter category"
-            />
+            <div className="relative">
+                <input
+                    className="mt-2 w-full border-[0.3px] border-gray-200 p-2 py-3 bg-white"
+                    type="text"
+                    value={category}
+                    onChange={updateCategory}
+                    onFocus={() => category.trim() && filteredCategories.length > 0 && setShowDropdown(true)}
+                    required
+                    placeholder="Enter category"
+                />
+                
+                {showDropdown && filteredCategories.length > 0 && (
+                    <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-md shadow-lg z-10 max-h-40 overflow-y-auto">
+                        {filteredCategories.map((cat, index) => (
+                            <div
+                                key={index}
+                                onClick={() => selectCategory(cat)}
+                                className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800"
+                            >
+                                {cat}
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
 
             <p className="mt-6 font-semibold text-[1.2rem]">Type:</p>
 
